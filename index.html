@@ -4,44 +4,190 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kamky Management System</title>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Sarabun', sans-serif; background: #f0f2f5; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
-        .menu-card { background: white; width: 100%; max-width: 350px; padding: 20px; margin-bottom: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: 0.2s; text-decoration: none; color: #333; display: block; }
-        .menu-card:active { transform: scale(0.95); }
-        .icon-box { font-size: 40px; margin-bottom: 10px; }
-        h1 { color: #2c3e50; margin-bottom: 30px; }
-        .title { font-size: 18px; font-weight: bold; }
-        .desc { font-size: 12px; color: #777; }
+        :root {
+            --navy-dark: #071952;
+            --blue-main: #0B6623; /* fallback */
+            --blue-primary: #088395;
+            --blue-light: #37B7C3;
+            --text-dark: #1E293B;
+            --text-gray: #64748B;
+        }
+
+        body { 
+            font-family: 'Sarabun', sans-serif; 
+            /* ไล่สีพื้นหลัง จากสีฟ้าสว่างไปหาน้ำเงินเข้ม */
+            background: linear-gradient(135deg, #1CB5E0 0%, #000851 100%);
+            margin: 0; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            box-sizing: border-box;
+        }
+
+        .header-section {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 40px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .header-section i {
+            font-size: 40px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .header-section h1 { 
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .menu-container {
+            width: 100%;
+            max-width: 380px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .menu-card { 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            padding: 20px; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15); 
+            display: flex;
+            align-items: center;
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            text-decoration: none; 
+            color: var(--text-dark); 
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-card:hover { 
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+            background: #ffffff;
+        }
+
+        .menu-card:active { 
+            transform: scale(0.97); 
+        }
+
+        /* เอฟเฟกต์แสงเงาวิ่งผ่านตอน Hover */
+        .menu-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            transition: all 0.6s ease;
+        }
+
+        .menu-card:hover::after {
+            left: 125%;
+        }
+
+        .icon-box { 
+            font-size: 30px; 
+            width: 50px;
+            display: flex;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .text-content {
+            flex: 1;
+        }
+
+        .title { 
+            font-size: 18px; 
+            font-weight: 700; 
+            margin-bottom: 4px;
+        }
+
+        .desc { 
+            font-size: 13px; 
+            color: var(--text-gray); 
+        }
+
+        .arrow-icon {
+            color: #CBD5E1;
+            font-size: 16px;
+            transition: 0.3s ease;
+        }
+
+        .menu-card:hover .arrow-icon {
+            color: var(--navy-dark);
+            transform: translateX(4px);
+        }
+
+        /* คุมโทนสีฟ้า-น้ำเงิน แต่ละเมนูให้ดูมีมิติแตกต่างกันเล็กน้อย */
+        .card-1 { border-left: 5px solid #37B7C3; }
+        .card-1 .icon-box, .card-1 .title { color: #088395; }
+
+        .card-2 { border-left: 5px solid #0056b3; }
+        .card-2 .icon-box, .card-2 .title { color: #0056b3; }
+
+        .card-3 { border-left: 5px solid #071952; }
+        .card-3 .icon-box, .card-3 .title { color: #071952; }
+
     </style>
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon-192.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="theme-color" content="#4361ee">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="theme-color" content="#071952">
 </head>
 <body>
 
-    <h1><i class="fas fa-cubes"></i>เลือกระบบงาน Kamky Management System</h1>
+    <div class="header-section">
+        <i class="fas fa-layer-group"></i>
+        <h1>เลือกระบบงาน</h1>
+        <div style="font-size: 14px; margin-top: 5px; opacity: 0.8;">Kamky Management System</div>
+    </div>
 
-    <a href="follow.html" class="menu-card" style="border-left: 5px solid #4361ee;">
-        <div class="icon-box" style="color: #4361ee;"><i class="fas fa-chart-pie"></i></div>
-        <div class="title">ระบบติดตามยอด</div>
-        <div class="desc">Collection System</div>
-    </a>
+    <div class="menu-container">
+        <a href="contract.html" class="menu-card card-3">
+            <div class="icon-box"><i class="fas fa-file-contract"></i></div>
+            <div class="text-content">
+                <div class="title">จัดการสัญญา</div>
+                <div class="desc">Contract Management</div>
+            </div>
+            <i class="fas fa-chevron-right arrow-icon"></i>
+        </a>
+		
+		<a href="follow.html" class="menu-card card-1">
+            <div class="icon-box"><i class="fas fa-chart-pie"></i></div>
+            <div class="text-content">
+                <div class="title">ระบบติดตามยอด</div>
+                <div class="desc">Collection System</div>
+            </div>
+            <i class="fas fa-chevron-right arrow-icon"></i>
+        </a>
 
-    <a href="bill.html" class="menu-card" style="border-left: 5px solid #2ecc71;">
-        <div class="icon-box" style="color: #2ecc71;"><i class="fas fa-receipt"></i></div>
-        <div class="title">ออกใบเสร็จรับเงิน</div>
-        <div class="desc">Issue Receipt & Verify Slip</div>
-    </a>
-
-    <a href="contract.html" class="menu-card" style="border-left: 5px solid #e74c3c;">
-        <div class="icon-box" style="color: #e74c3c;"><i class="fas fa-file-contract"></i></div>
-        <div class="title">จัดการสัญญา</div>
-        <div class="desc">Contract Management</div>
-    </a>
+        <a href="bill.html" class="menu-card card-2">
+            <div class="icon-box"><i class="fas fa-receipt"></i></div>
+            <div class="text-content">
+                <div class="title">ออกใบเสร็จรับเงิน</div>
+                <div class="desc">Issue Receipt & Verify Slip</div>
+            </div>
+            <i class="fas fa-chevron-right arrow-icon"></i>
+        </a>
+        
+    </div>
 
 <script>
   if ('serviceWorker' in navigator) {
